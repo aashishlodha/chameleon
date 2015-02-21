@@ -1,0 +1,44 @@
+<div class="col-xs-12 col-sm-8 col-md-7" style="float:left;">
+	<div ng-show="entity">
+		<!-- <div><a href="#/">Back</a></div> -->
+		<div><h1>{{entity.name}}</h1></div>
+		<form name="entityForm">
+			<table class="table table-bordered table-condensed">
+				<thead>
+					<tr>
+						<th>Property Name</th>
+						<th style="white-space: nowrap;">Property Type</th>
+						<th style="width:50px;"><span class="btn btn-danger glyphicon glyphicon-trash" ng-click="removeEntity(entity.id)"/></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="property in entity.properties">
+						<td><input class="form-control" type="text" ng-model="property.name"></td>
+						<td><select class="form-control" ng-options="type for type in typeList" ng-model="property.type"></select></td>
+						<td><span class="form-control btn btn-danger glyphicon glyphicon-trash" ng-click="removeProperty($index)"></span></td>
+					</tr>
+					<tr>
+						<td colspan=3>
+							<button style="width:40px;float:left;" class="form-control btn btn-primary" ng-click="addProperty()">
+								+
+							</button>
+							<button ng-click="saveEntity(entity)" style="width:40px;float:right;" ng-disabled="!entityForm.$dirty" class="form-control btn btn-success">
+								<span class="glyphicon glyphicon-floppy-disk" style="font-size:1.5em;"></span>
+							</button>
+						</td>
+						<!-- <td><button ng-show="entityForm.$dirty" class="form-control btn btn-success">
+								<span class="glyphicon glyphicon-floppy-disk" style="font-size:1.5em;"></span>
+							</button>
+						</td>
+						<td></td> -->
+					</tr>
+				</tbody>
+			</table><br>
+		</form>
+		<!-- <div><a href="#/">Back</a></div> -->
+	</div>
+	<div ng-hide="entity">
+		<br><br>
+		<div>No entity selected</div>
+	</div>
+</div>

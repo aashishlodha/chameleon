@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chameleon</title>
+
+<link rel="stylesheet" href="css/bootstrap.css" />
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+<!-- <link rel="stylesheet" href="css/ui-grid-unstable.min.css" /> -->
+<link rel="stylesheet" href="css/ng-grid.min.css" />
+<link rel="stylesheet" href="css/app.css" />
+
+<script src="js/jquery-2.0.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-route.js"></script>
+<!-- <script src="js/ui-grid-unstable.min.js"></script> -->
+<script src="js/ng-grid-2.0.14.min.js"></script>
+<script src="js/ngDialog.min.js"></script>
+<script src="app/app.js"></script>
+
+<script src="app/services/EntityService.js"></script>
+<script src="app/controllers/HomeCtrl.js"></script>
+<script src="app/controllers/NavBarController.js"></script>
+<script src="app/controllers/LoginCtrl.js"></script>
+<script src="app/controllers/EntityListCtrl.js"></script>
+<script src="app/controllers/EntityViewCtrl.js"></script>
+</head>
+<body ng-app="chameleon" style="background-image: url('images/tiny_grid.png');">
+	<nav class="navbar navbar-default" ng-controller="NavBarController" style="height: 50px;"><!-- inverse -->
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="navbar-brand" href="#">Chameleon</a>
+		    </div>
+		    
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      <ul class="nav navbar-nav">
+		        <!-- <li class="active"><a href="#">Link</a></li> -->
+		        <li>
+		        	<a>
+		        		<label for="projectName">Project:</label>
+		        		<select id="projectName" ng-options="project.name for project in projects" ng-model="selectedProject" ng-change="projectChange(selectedProject)">
+		        			<!-- <option>sample</option>
+		        			<option>sample2</option> -->
+		        		</select>
+		        	</a>
+		        </li>
+		        <li>
+		        	<a href="#/mail">
+		        		<span class="glyphicon glyphicon-share-alt"></span>
+		        		<span class="glyphicon glyphicon-envelope" style="padding: 0px; margin: -4px;"></span>
+		        	</a>
+		        </li>
+		        <!-- <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tools <span class="caret"></span></a>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="#">Add Entity</a></li>
+		            <li><a href="#">Remove Entity</a></li>
+		            <li><a href="#">Edit Entity</a></li>
+		            <li class="divider"></li>
+		            <li><a href="#">Create New Project</a></li>
+		            <li><a href="#">Delete Project</a></li>
+		            <li class="divider"></li>
+		            <li><a href="#">Export</a></li>
+		          </ul>
+		        </li> -->
+		      </ul>
+		      
+		      <ul class="nav navbar-nav navbar-right">
+		        <li><a href="#/settings" alt="Settings" class="glyphicon glyphicon-cog"></a></li>
+		        <li><a href="#/logout" alt="Settings" class="glyphicon glyphicon-log-out"></a></li>
+		      </ul>
+		    </div><!-- /.navbar-collapse -->
+		</div>
+	</nav>
+	<ng-include src="'app/templates/entityList.html'"></ng-include>
+	<div>
+		<div ng-view></div>
+	</div>
+</body>
+</html>
