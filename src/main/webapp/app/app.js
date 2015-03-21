@@ -1,24 +1,26 @@
 (function(){
-	var app = angular.module("chameleon",["ngRoute","ngGrid"]);
-	app.config(function($routeProvider){
+	var app = angular.module("chameleon",["ngRoute","ui.grid", "ui.grid.edit", "ui.grid.selection"]);
+	app.config(function($routeProvider/*, $locationProvider*/){
 		$routeProvider.when("/",{
-			templateUrl: "app/templates/entityView.html",
-			controller : "EntityViewCtrl"
+			templateUrl: "app/entity/entity.html",
+			controller : "EntityCtrl"
 		});
 		$routeProvider.when("/project/:pid",{
-			templateUrl: "app/templates/entityView.html",
-			controller : "EntityViewCtrl"
+			templateUrl: "app/entity/entity.html",
+			controller : "EntityCtrl"
 		});
 		$routeProvider.when("/login",{
-			templateUrl: "app/templates/login.html",
+			templateUrl: "app/login/login.html",
 			controller : "LoginCtrl"
 		});
 		$routeProvider.when("/project/:pid/entity/:eid",{
-			templateUrl: "app/templates/entityView.html",
-			controller : "EntityViewCtrl"
+			templateUrl: "app/entity/entity.html",
+			controller : "EntityCtrl"
 		});
 		$routeProvider.otherwise({
 			redirectTo : "/"
 		});
+
+		//$locationProvider.html5Mode(true);
 	});
 })();

@@ -1,4 +1,4 @@
-<div class="col-sm-3" ng-controller="EntityListCtrl">
+<div class="col-sm-3" ng-controller="ExplorerCtrl">
 	<!-- <div style="float:right;font-size:1.8em;border:1 solid red;">
 		<span class="glyphicon glyphicon-th"></span>
 	</div>
@@ -45,7 +45,8 @@
 		</tr>
 	</table>
 	<div class="table-responsive">
-	<div class="gridStyle" ng-grid="gridOptions">
+	<!-- <div class="gridStyle" ng-grid="gridOptions"> -->
+	<div class="gridStyle" ui-grid-selection ui-grid-edit ui-grid="gridOptions">
 	</div>
 	<!-- <div class="gridStyle" ui-grid="entities"></div> -->
 </div>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- <base href="/"> -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chameleon</title>
@@ -8,7 +9,8 @@
 <link rel="stylesheet" href="css/bootstrap.css" />
 <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
 <!-- <link rel="stylesheet" href="css/ui-grid-unstable.min.css" /> -->
-<link rel="stylesheet" href="css/ng-grid.min.css" />
+<!-- <link rel="stylesheet" href="css/ng-grid.min.css" /> -->
+<link rel="stylesheet" href="js/ui-grid/ui-grid.min.css" />
 <link rel="stylesheet" href="css/app.css" />
 
 <script src="js/jquery-2.0.3.min.js"></script>
@@ -16,16 +18,18 @@
 <script src="js/angular.min.js"></script>
 <script src="js/angular-route.js"></script>
 <!-- <script src="js/ui-grid-unstable.min.js"></script> -->
-<script src="js/ng-grid-2.0.14.min.js"></script>
-<script src="js/ngDialog.min.js"></script>
+<!-- <script src="js/ng-grid-2.0.14.min.js"></script> -->
+<script src="js/ui-grid/ui-grid.min.js"></script>
+<!-- <script src="js/ngDialog.min.js"></script> -->
 <script src="app/app.js"></script>
 
-<script src="app/services/EntityService.js"></script>
-<script src="app/controllers/HomeCtrl.js"></script>
-<script src="app/controllers/NavBarController.js"></script>
-<script src="app/controllers/LoginCtrl.js"></script>
-<script src="app/controllers/EntityListCtrl.js"></script>
-<script src="app/controllers/EntityViewCtrl.js"></script>
+
+<script src="app/dashboard/DashBoardCtrl.js"></script>
+<script src="app/navbar/NavBarController.js"></script>
+<script src="app/login/LoginCtrl.js"></script>
+<script src="app/explorer/ExplorerCtrl.js"></script>
+<script src="app/entity/EntityCtrl.js"></script>
+<script src="app/entity/EntityService.js"></script>
 </head>
 <body ng-app="chameleon" style="background-image: url('images/tiny_grid.png');">
 	<nav class="navbar navbar-default" ng-controller="NavBarController" style="height: 50px;"><!-- inverse -->
@@ -82,7 +86,7 @@
 		    </div><!-- /.navbar-collapse -->
 		</div>
 	</nav>
-	<ng-include src="'app/templates/entityList.html'"></ng-include>
+	<ng-include src="'app/explorer/explorer.html'"></ng-include>
 	<div>
 		<div ng-view></div>
 	</div>
