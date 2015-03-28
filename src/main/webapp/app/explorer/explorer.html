@@ -1,52 +1,19 @@
-<div class="col-sm-3" ng-controller="ExplorerCtrl">
-	<!-- <div style="float:right;font-size:1.8em;border:1 solid red;">
-		<span class="glyphicon glyphicon-th"></span>
+<div class="panel panel-default">
+	<div class="panel-heading"><a href="#" class="pull-right">[create new]</a> <h4>Project</h4></div>
+	<div class="panel-body">
+		<!-- <label for="projectName">Project:</label> -->
+		<select class="form-control" id="projectName" ng-options="project.name for project in projects" ng-model="selectedProject" ng-change="projectChange(selectedProject)">
+		</select>
+		<!-- <button class="btn btn-primary">New</button> -->
 	</div>
-	<div style="float:right;margin-right:5px;font-size:1.8em;">
-		<span class="glyphicon glyphicon-th-list"></span>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading"><a href="#" class="pull-right">[create new]</a><h4>Entities</h4></div>
+	<div class="panel-body">
+		<div class="list-group">
+			<a class="list-group-item" ng-show="entities.length > 0" ng-click="selectEntity(entity)" ng-repeat="entity in entities">
+				{{entity.name}}
+			</a>
+		</div>
 	</div>
-	<br> -->
-	<div><h1>Entities</h1></div>
-	<table class="table table-bordered table-condensed">
-		<tr>
-			
-			<td>
-				<!-- <form class="form-inline">
-					<div class="form-group col-md-8">
-					<input type="text" id="entityName" class="form-control" placeholder="Entity Name"/>
-					</div>
-					<button class="btn btn-success col-md-4" style="float:right;" ng-click="alert(1);">Create</button>
-				</form> -->
-				<div class="row">
-				   <div class="col-lg-12">
-				    <div class="input-group">
-				      <input type="text" ng-model="entityName" class="form-control" placeholder="Entity Name">
-				      <span class="input-group-btn">
-				        <button class="btn btn-primary" ng-click="addNewEntity()">Create</button>
-				      </span>
-				    </div><!-- /input-group -->
-				  </div><!-- /.col-lg-6 -->
-				</div><!-- /.row -->
-			</td>
-			
-		</tr>
-		<tr ng-show="entities.length>0" >
-				<td class="form-group">
-					<!-- <button class="btn btn-default" ng-click="addNewEntity()"><span class="glyphicon glyphicon-plus"></span></button> -->
-					<input type="search" class="form-control" style="float:right;" ng-model="entitySearch" placeholder="Search Entity">
-					<!-- <span type="search" class="glyphicon glyphicon-search" aria-hidden="true"></span> -->
-				</td>
-		</tr>
-		<tr ng-show="entities.length>0" ng-repeat="entity in entities | filter:entitySearch">
-			<td><a ng-click="selectEntity(entity)">{{entity.name}}</td>
-		</tr>
-		<tr ng-show="entities.length==0">
-			<td>No entities found!</td>
-		</tr>
-	</table>
-	<div class="table-responsive">
-	<!-- <div class="gridStyle" ng-grid="gridOptions"> -->
-	<div class="gridStyle" ui-grid-selection ui-grid-edit ui-grid="gridOptions">
-	</div>
-	<!-- <div class="gridStyle" ui-grid="entities"></div> -->
 </div>

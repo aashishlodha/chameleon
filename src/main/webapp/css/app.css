@@ -3,3 +3,7 @@
     width: 100%; 
     min-height:200px;
 }
+.panel-heading{
+	padding-top:1px;
+	padding-bottom:1px;
+}

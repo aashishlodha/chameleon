@@ -1,17 +1,20 @@
 (function(){
 	var app = angular.module("chameleon");
-	app.factory('entityService',['$http','$q',function($http,$q){
+	app.factory('entityService',['$http','$q','$routeParams',function($http,$q){
 
 		var projectList = null;
 		var selectedProject = null;
-		var entityList = null;
+		var entityList = [];
 		var selectedEntity = null;
 
 		console.log("Creating service object for entityService..");
 		var service = {
 			changeProject : changeProject,
+			setSelectedProject : setSelectedProject,
 			getSelectedProject : getSelectedProject,
+			getProjectById : getProjectById,
 			getProjectList : getProjectList,
+			setProjectList : setProjectList,
 			getEntity : getEntity,
 			getEntitiesForProject : getEntitiesForProject,
 			createOrUpdateEntity : createOrUpdateEntity,
@@ -20,123 +23,96 @@
 
 		return service;
 
-		function changeProject(pid){
-			var deferred = $q.defer();
+		function getProjectById(pid){
+			console.log("inside getProjectById() >> pid >>" +pid +"," + projectList);
 
+			var projectNeeded;
 			angular.forEach(projectList, function(project){
+				console.log(project);
 				if(project.id == pid){
-					selectedProject = project;
+					console.log("found the project >>" + project);
+					projectNeeded = project;
 				}
 			});
+			return projectNeeded;
+		}
 
-			console.log("splicing entity list..");
-			entityList.splice(0,entityList.length);
-			console.log(entityList);
-			
-			getEntitiesForProject();
-			//entityList.splice(0,entityList.length);
-			//console.log("<<entityList>> " + entityList);
-			deferred.resolve(selectedProject);
-			return deferred.promise;
-		};
+		function setProjectList(projects){
+			projectList = projects;
+		}
 
 		function getSelectedProject(){
-			var deferred = $q.defer();
+			return selectedProject;
+		};
 
-			if(selectedProject == null){
-				getProjectList()
-				.then(function(projects){
-					console.log("<<projects>>" + projects);
-					selectedProject = projects[0];
-				});
-				selectedProject = projectList[0];
-				deferred.resolve(selectedProject);
-			}
-			else{
-				deferred.resolve(selectedProject);
-			}
-			return deferred.promise;
+		function setSelectedProject(project){
+			console.log("setting selected project >> " + project);
+			selectedProject= project;
 		};
 		
 		function getProjectList(){
 			var deferred = $q.defer();
 
-			if(projectList == null){
+			if(!projectList){
 				console.log("Getting the Project list for the first time..");
 
 				$http.get("api/project")
-				.success(function(data){
-					projectList = data;
-					if(selectedProject == null)
-						selectedProject == projectList[0];
-					deferred.resolve(data);
+				.success(function(projects){
+					projectList = projects;
+					
+					//selectedProject == projectList[0];
+					deferred.resolve(projectList);
 				})
 				.error(function(reason){
 					deferred.reject(reason);
 				});
-			}
-			else{
-				console.log("Returning the Project list present in memory..");
+			}else{
 				deferred.resolve(projectList);
 			}
+			
+			return deferred.promise;
+		};
 
+		function getEntitiesForProject(){
+			var deferred = $q.defer();
+			console.log("inside getEntitiesForProject >> selectedProject " + selectedProject);
+
+			var pid = selectedProject.id;
+
+			console.log("splicing entity list..");
+			entityList.splice(0,entityList.length);
+			console.log(entityList);
+			
+			$http.get("api/project/"+pid+"/entity")
+			.success(function(entities){
+				//entityList = entities;
+				angular.forEach(entities, function(entity){
+					// console.log("Entity :" + entity);
+					entityList.push(entity);
+				});
+				deferred.resolve(entityList);
+			})
+			.error(function(reason){
+				deferred.reject(reason);
+			});
+		
 			return deferred.promise;
 		};
 
 		function getEntity(pid, eid){
 
 			var deferred = $q.defer();
-
-			// We should check here that entity is present in the memory or not..
-			if(selectedProject.id == pid && selectedEntity != undefined && selectedEntity.id == eid){
-				deferred.resolve(selectedEntity);
-			}
-			else{
-				console.log("Getting the Entity for the first time..");
-				$http.get("api/project/" + pid + "/entity/" + eid)
-				.success(function(data){
-					//entityList[eid] = data;
-					selectedEntity = data;
-					deferred.resolve(data);
-				})
-				.error(function(reason){
-					deferred.reject(reason);
-				});
-			}
-			return deferred.promise;
-		};
-
-		function getEntitiesForProject(){
-			var deferred = $q.defer();
-			var pid;
-			getSelectedProject().then(function(project){
-				console.log("<<project>>" + project);
-				pid = project.id;
-				$http.get("api/project/"+pid+"/entity")
-					.success(function(data){
-						
-						console.log("pushing into entity list..", data);
-						/*angular.forEach(data, function(entity){
-							console.log("Adding entity : " + entity);
-							entityList.push(entity);
-						});*/
-						if(entityList == null){
-							entityList = data;
-						}
-						else{
-							console.log("for each entity..");
-							angular.forEach(data, function(entity){
-								entityList.push(entity);
-							});
-						}
-						console.log(entityList);
-						
-						deferred.resolve(data);
-					})
-					.error(function(reason){
-						deferred.reject(reason);
-					});
+			
+			console.log("Getting the Entity for the first time..");
+			$http.get("api/project/" + pid + "/entity/" + eid)
+			.success(function(data){
+				//entityList[eid] = data;
+				selectedEntity = data;
+				deferred.resolve(data);
 			})
+			.error(function(reason){
+				deferred.reject(reason);
+			});
 			
 			return deferred.promise;
 		};
@@ -164,6 +140,21 @@
 			.error(function(reason){
 				deferred.reject(reason);
 			});
+			return deferred.promise;
+		};
+
+		function changeProject(project){
+			var deferred = $q.defer();
+
+			console.log("Changing selectedProject >>" + selectedProject);
+			selectedProject = project;
+
+			/*console.log("splicing entity list..");
+			entityList.splice(0,entityList.length);
+			console.log(entityList);
+			
+			getEntitiesForProject(pid);*/
+			deferred.resolve(selectedProject);
 			return deferred.promise;
 		};
 		
